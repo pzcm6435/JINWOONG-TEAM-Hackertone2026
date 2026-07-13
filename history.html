@@ -11,18 +11,24 @@
   <div class="mx-auto max-w-md min-h-screen bg-slate-50 pb-24 relative">
 
     <!-- Top bar -->
-    <header class="flex items-center justify-between px-5 pt-6 pb-4">
-      <button class="w-9 h-9 flex items-center justify-center rounded-full bg-white shadow-sm">
+    <header class="flex items-center justify-between px-5 pt-6 pb-4 relative">
+      <a href="home.html" class="w-9 h-9 flex items-center justify-center rounded-full bg-white shadow-sm">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
-      </button>
+      </a>
       <h1 class="text-lg font-bold">History</h1>
-      <button class="w-9 h-9 flex items-center justify-center rounded-full bg-white shadow-sm">
+      <button id="filterBtn" class="w-9 h-9 flex items-center justify-center rounded-full bg-white shadow-sm">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-7.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
         </svg>
       </button>
+      <div id="filterMenu" class="hidden absolute right-5 top-16 bg-white rounded-2xl shadow-lg p-2 w-36 z-10 text-sm">
+        <button data-filter="all" class="filter-option w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50 font-semibold text-indigo-600">All</button>
+        <button data-filter="human" class="filter-option w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50">Human</button>
+        <button data-filter="synthetic" class="filter-option w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50">Synthetic</button>
+        <button data-filter="uncertain" class="filter-option w-full text-left px-3 py-2 rounded-xl hover:bg-slate-50">Uncertain</button>
+      </div>
     </header>
 
     <!-- Summary strip -->
@@ -43,7 +49,9 @@
     <main class="px-5 mt-4 space-y-3" id="historyList">
 
       <!-- Item: synthetic / high risk -->
-      <article class="rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3">
+      <article class="history-item rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3 text-left w-full cursor-pointer"
+        data-status="synthetic" data-file="unknown_caller_0731.mp3" data-time="Today · 12:04 PM · 00:42" data-risk="87"
+        data-accent="" data-evidence="비정상적으로 일정한 피치 패턴|자연스러운 호흡/멈춤 부족|주파수 스펙트럼에서 합성 아티팩트 감지">
         <div class="w-11 h-11 shrink-0 rounded-full bg-red-50 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
@@ -63,7 +71,9 @@
       </article>
 
       <!-- Item: human / accent -->
-      <article class="rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3">
+      <article class="history-item rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3 text-left w-full cursor-pointer"
+        data-status="human" data-file="client_call_0729.wav" data-time="Jul 12 · 3:21 PM" data-risk="6"
+        data-accent="🇺🇸 US 52%|🇬🇧 UK 28%|🇦🇺 AU 12%" data-evidence="자연스러운 억양 변화 감지|일관된 호흡 패턴|모델 합성 아티팩트 없음">
         <div class="w-11 h-11 shrink-0 rounded-full bg-indigo-50 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
@@ -83,7 +93,9 @@
       </article>
 
       <!-- Item: synthetic / medium risk -->
-      <article class="rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3">
+      <article class="history-item rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3 text-left w-full cursor-pointer"
+        data-status="uncertain" data-file="voicemail_0728.mp3" data-time="Jul 12 · 9:47 AM · 01:05" data-risk="54"
+        data-accent="" data-evidence="배경 잡음으로 인한 낮은 신호 품질|합성/실음성 판별 신뢰도 낮음|추가 샘플 확보 권장">
         <div class="w-11 h-11 shrink-0 rounded-full bg-amber-50 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" />
@@ -103,7 +115,9 @@
       </article>
 
       <!-- Item: human / accent -->
-      <article class="rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3">
+      <article class="history-item rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3 text-left w-full cursor-pointer"
+        data-status="human" data-file="support_line_0725.wav" data-time="Jul 10 · 5:58 PM" data-risk="9"
+        data-accent="🇬🇧 UK 41%|🇺🇸 US 33%|🇮🇪 IE 14%" data-evidence="자연스러운 억양 변화 감지|일관된 호흡 패턴|모델 합성 아티팩트 없음">
         <div class="w-11 h-11 shrink-0 rounded-full bg-indigo-50 flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
@@ -124,35 +138,64 @@
 
     </main>
 
+    <!-- Detail modal -->
+    <div id="detailModal" class="hidden fixed inset-0 bg-black/40 z-20 flex items-end justify-center">
+      <div class="bg-white rounded-t-3xl w-full max-w-md p-5 max-h-[80vh] overflow-y-auto">
+        <div class="w-10 h-1 bg-slate-200 rounded-full mx-auto mb-4"></div>
+        <div class="flex items-center justify-between mb-1">
+          <h2 id="modalFile" class="font-bold text-base"></h2>
+          <span id="modalStatus" class="text-[10px] font-semibold px-2 py-0.5 rounded-full"></span>
+        </div>
+        <p id="modalTime" class="text-xs text-slate-400 mb-4"></p>
+
+        <div class="flex items-center justify-between bg-slate-50 rounded-2xl p-4 mb-4">
+          <span class="text-sm font-semibold">Risk Score</span>
+          <span id="modalRisk" class="text-2xl font-extrabold"></span>
+        </div>
+
+        <div id="modalAccentWrap" class="mb-4">
+          <p class="text-sm font-semibold mb-2">Accent Pattern</p>
+          <div id="modalAccent" class="space-y-2"></div>
+        </div>
+
+        <div>
+          <p class="text-sm font-semibold mb-2">Evidence</p>
+          <ul id="modalEvidence" class="text-sm text-slate-600 space-y-1.5 list-disc pl-5"></ul>
+        </div>
+
+        <button id="modalClose" class="w-full mt-5 bg-slate-100 rounded-2xl py-3 text-sm font-semibold">닫기</button>
+      </div>
+    </div>
+
     <!-- Floating Add button -->
-    <button id="addBtn" class="fixed bottom-24 right-6 max-w-md mx-auto w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 shadow-lg shadow-emerald-500/30 flex items-center justify-center transition">
+    <a id="addBtn" href="home.html" class="fixed bottom-24 right-6 max-w-md mx-auto w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 shadow-lg shadow-emerald-500/30 flex items-center justify-center transition">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
       </svg>
-    </button>
+    </a>
 
     <!-- Bottom nav -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100">
       <div class="mx-auto max-w-md grid grid-cols-4 py-2">
-        <a href="#" class="flex flex-col items-center gap-1 py-1 text-slate-400">
+        <a href="home.html" class="flex flex-col items-center gap-1 py-1 text-slate-400">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955a1.5 1.5 0 012.122 0l8.955 8.955M4.5 9.75v10.125a.375.375 0 00.375.375H9v-5.25a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5v5.25h4.125a.375.375 0 00.375-.375V9.75" />
           </svg>
           <span class="text-[10px] font-medium">Home</span>
         </a>
-        <a href="#" class="flex flex-col items-center gap-1 py-1 text-indigo-600">
+        <a href="history.html" class="flex flex-col items-center gap-1 py-1 text-indigo-600">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <span class="text-[10px] font-semibold">History</span>
         </a>
-        <a href="#" class="flex flex-col items-center gap-1 py-1 text-slate-400">
+        <a href="reports.html" class="flex flex-col items-center gap-1 py-1 text-slate-400">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
           </svg>
           <span class="text-[10px] font-medium">Reports</span>
         </a>
-        <a href="#" class="flex flex-col items-center gap-1 py-1 text-slate-400">
+        <a href="settings.html" class="flex flex-col items-center gap-1 py-1 text-slate-400">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.28z" />
           </svg>
