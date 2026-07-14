@@ -1,6 +1,11 @@
 import express from "express";
 import cors from "cors";
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 import { pool } from "./db.js";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 app.use(cors());
@@ -72,7 +77,20 @@ app.get("/api/scans/summary", async (req, res) => {
   }
 });
 
+async function ensureSchema() {
+  const sql = readFileSync(join(__dirname, "schema.sql"), "utf8");
+  await pool.query(sql);
+}
+
 const port = process.env.PORT || 4000;
-app.listen(port, () => {
-  console.log(`Voice Check API listening on port ${port}`);
-});
+
+ensureSchema()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Voice Check API listening on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to prepare database schema:", err.message);
+    process.exit(1);
+  });
