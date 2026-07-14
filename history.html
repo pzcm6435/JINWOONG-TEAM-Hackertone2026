@@ -36,107 +36,19 @@
       <div class="flex gap-3 text-sm">
         <div class="flex-1 rounded-2xl bg-white shadow-sm px-4 py-3">
           <p class="text-slate-400 text-xs">Total scans</p>
-          <p class="text-xl font-bold text-slate-900">12</p>
+          <p class="text-xl font-bold text-slate-900" id="totalCount">–</p>
         </div>
         <div class="flex-1 rounded-2xl bg-white shadow-sm px-4 py-3">
           <p class="text-slate-400 text-xs">Flagged</p>
-          <p class="text-xl font-bold text-red-500">3</p>
+          <p class="text-xl font-bold text-red-500" id="flaggedCount">–</p>
         </div>
       </div>
     </section>
 
+    <p id="offlineNotice" class="hidden px-5 mb-2 text-xs text-amber-600 bg-amber-50 mx-5 rounded-xl px-3 py-2"></p>
+
     <!-- List -->
-    <main class="px-5 mt-4 space-y-3" id="historyList">
-
-      <!-- Item: synthetic / high risk -->
-      <article class="history-item rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3 text-left w-full cursor-pointer"
-        data-status="synthetic" data-file="unknown_caller_0731.mp3" data-time="Today · 12:04 PM · 00:42" data-risk="87"
-        data-accent="" data-evidence="비정상적으로 일정한 피치 패턴|자연스러운 호흡/멈춤 부족|주파수 스펙트럼에서 합성 아티팩트 감지">
-        <div class="w-11 h-11 shrink-0 rounded-full bg-red-50 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-          </svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2">
-            <p class="font-semibold text-sm truncate">unknown_caller_0731.mp3</p>
-            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-100 text-red-600">Synthetic</span>
-          </div>
-          <p class="text-xs text-slate-400 mt-0.5">Today · 12:04 PM · 00:42</p>
-        </div>
-        <div class="text-right shrink-0">
-          <p class="text-sm font-bold text-red-500">87%</p>
-          <p class="text-[10px] text-slate-400">risk</p>
-        </div>
-      </article>
-
-      <!-- Item: human / accent -->
-      <article class="history-item rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3 text-left w-full cursor-pointer"
-        data-status="human" data-file="client_call_0729.wav" data-time="Jul 12 · 3:21 PM" data-risk="6"
-        data-accent="🇺🇸 US 52%|🇬🇧 UK 28%|🇦🇺 AU 12%" data-evidence="자연스러운 억양 변화 감지|일관된 호흡 패턴|모델 합성 아티팩트 없음">
-        <div class="w-11 h-11 shrink-0 rounded-full bg-indigo-50 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
-          </svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2">
-            <p class="font-semibold text-sm truncate">client_call_0729.wav</p>
-            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-600">Human</span>
-          </div>
-          <p class="text-xs text-slate-400 mt-0.5">Jul 12 · 3:21 PM · 🇺🇸 US 52%</p>
-        </div>
-        <div class="text-right shrink-0">
-          <p class="text-sm font-bold text-emerald-500">6%</p>
-          <p class="text-[10px] text-slate-400">risk</p>
-        </div>
-      </article>
-
-      <!-- Item: synthetic / medium risk -->
-      <article class="history-item rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3 text-left w-full cursor-pointer"
-        data-status="uncertain" data-file="voicemail_0728.mp3" data-time="Jul 12 · 9:47 AM · 01:05" data-risk="54"
-        data-accent="" data-evidence="배경 잡음으로 인한 낮은 신호 품질|합성/실음성 판별 신뢰도 낮음|추가 샘플 확보 권장">
-        <div class="w-11 h-11 shrink-0 rounded-full bg-amber-50 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" />
-          </svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2">
-            <p class="font-semibold text-sm truncate">voicemail_0728.mp3</p>
-            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-600">Uncertain</span>
-          </div>
-          <p class="text-xs text-slate-400 mt-0.5">Jul 12 · 9:47 AM · 01:05</p>
-        </div>
-        <div class="text-right shrink-0">
-          <p class="text-sm font-bold text-amber-500">54%</p>
-          <p class="text-[10px] text-slate-400">risk</p>
-        </div>
-      </article>
-
-      <!-- Item: human / accent -->
-      <article class="history-item rounded-2xl bg-white shadow-sm p-4 flex items-center gap-3 text-left w-full cursor-pointer"
-        data-status="human" data-file="support_line_0725.wav" data-time="Jul 10 · 5:58 PM" data-risk="9"
-        data-accent="🇬🇧 UK 41%|🇺🇸 US 33%|🇮🇪 IE 14%" data-evidence="자연스러운 억양 변화 감지|일관된 호흡 패턴|모델 합성 아티팩트 없음">
-        <div class="w-11 h-11 shrink-0 rounded-full bg-indigo-50 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
-          </svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2">
-            <p class="font-semibold text-sm truncate">support_line_0725.wav</p>
-            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-600">Human</span>
-          </div>
-          <p class="text-xs text-slate-400 mt-0.5">Jul 10 · 5:58 PM · 🇬🇧 UK 41%</p>
-        </div>
-        <div class="text-right shrink-0">
-          <p class="text-sm font-bold text-emerald-500">9%</p>
-          <p class="text-[10px] text-slate-400">risk</p>
-        </div>
-      </article>
-
-    </main>
+    <main class="px-5 mt-4 space-y-3" id="historyList"></main>
 
     <!-- Detail modal -->
     <div id="detailModal" class="hidden fixed inset-0 bg-black/40 z-20 flex items-end justify-center">
@@ -206,6 +118,7 @@
 
   </div>
 
+  <script src="config.js"></script>
   <script src="history.js"></script>
 </body>
 </html>
