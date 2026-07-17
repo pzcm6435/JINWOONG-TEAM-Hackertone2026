@@ -4,6 +4,7 @@ import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { pool } from "./db.js";
+import { predictVoiceCheck } from "./vertex.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -17,6 +18,42 @@ app.get("/api/health", async (req, res) => {
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// Runs the Vertex AI model on audio-feature inputs and classifies human vs synthetic.
+// Falls back to a deterministic heuristic when MODEL_ENDPOINT_URL isn't set (or the
+// endpoint is undeployed) so the rest of the app keeps working without live GCP billing.
+app.post("/api/analyze", async (req, res) => {
+  const { pitchStability, accentConsistency, frequencyAnomalyScore, pauseNaturalness, durationSec } =
+    req.body ?? {};
+
+  if ([pitchStability, accentConsistency, frequencyAnomalyScore, pauseNaturalness].some((v) => v === undefined)) {
+    return res.status(400).json({
+      error: "pitchStability, accentConsistency, frequencyAnomalyScore, pauseNaturalness are required",
+    });
+  }
+
+  const features = { pitchStability, accentConsistency, frequencyAnomalyScore, pauseNaturalness, durationSec };
+
+  try {
+    const prediction = await predictVoiceCheck(features);
+
+    if (prediction) {
+      const riskScore = Math.round(prediction.syntheticScore * 100);
+      const status = riskScore >= 70 ? "synthetic" : riskScore >= 50 ? "uncertain" : "human";
+      return res.json({ source: "vertex-ai", status, riskScore, ...prediction });
+    }
+
+    // No live endpoint configured — simple heuristic fallback from the raw features.
+    const riskScore = Math.round(
+      100 - (pitchStability + accentConsistency + pauseNaturalness) / 3 + frequencyAnomalyScore / 3
+    );
+    const clamped = Math.max(0, Math.min(100, riskScore));
+    const status = clamped >= 70 ? "synthetic" : clamped >= 50 ? "uncertain" : "human";
+    res.json({ source: "heuristic-fallback", status, riskScore: clamped });
+  } catch (err) {
+    res.status(502).json({ error: `Model call failed: ${err.message}` });
   }
 });
 
